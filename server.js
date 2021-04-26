@@ -1,10 +1,13 @@
-const { reset } = require('colorette');
-const express = require('express');
 require('dotenv').config();
+
+const { Model } = require('objection');
+const { knex } = require('./knex');
+
+const express = require('express');
 path = require('path');
 
 // Temporary measure -> Loading the package.json() file
-const data = require('./seedData.json');
+const JSONdata = require('./seedData.json');
 
 const app = express();
 
@@ -17,8 +20,32 @@ app.get('/', (_, res) => {
 })
 
 // API Routes
-app.get('/books', (req, res) => {
-  res.send(data.books);
+// DATABASE QUERIES
+// give the knell instance to objection
+Model.knex(knex);
+
+// first Model
+class Book extends Model {
+  static get tableName() {
+    return 'books';
+  }
+
+  static get idColumn() {
+    return 'id';
+  }
+
+}
+
+app.get('/books', async (req, res) =>  {
+  
+  Book.query().then((booklist) => {
+    console.log(`Been there: ${JSON.stringify(booklist)}`);
+    res.send(booklist);
+  }).catch((err) => {
+    console.log(err);
+    res.status(500).send(err);
+  });
+
 })
 
 app.get('/books/:id', (req, res) => {

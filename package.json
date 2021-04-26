@@ -6,8 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "dev" : "nodemon server.js",
-    "help" : "nodemon --help config"
+    "dev": "nodemon server.js",
+    "makemigration" : "node -r dotenv/config ./node_modules/knex/bin/cli.js --knexfile ./knexfile.js migrate:make",
+    "migrate" : "node -r dotenv/config ./node_modules/knex/bin/cli.js --knexfile ./knexfile.js migrate:latest",
+    "rollback" : "knex migrate:rollback"
   },
   "repository": {
     "type": "git",
@@ -26,7 +28,9 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "knex": "^0.95.4",
-    "nodemon": "^2.0.7"
+    "knex": "^0.21.19",
+    "nodemon": "^2.0.7",
+    "objection": "^2.2.15",
+    "pg": "^8.6.0"
   }
 }
