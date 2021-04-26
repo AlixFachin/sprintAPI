@@ -1,13 +1,11 @@
 require('dotenv').config();
 
-const { Model } = require('objection');
-const { knex } = require('./knex');
-
 const express = require('express');
 path = require('path');
+const dbqueries = require('./dbqueries');
 
-// Temporary measure -> Loading the package.json() file
-const JSONdata = require('./seedData.json');
+// // Temporary measure -> Loading the package.json() file
+// const JSONdata = require('./seedData.json');
 
 const app = express();
 
@@ -20,43 +18,38 @@ app.get('/', (_, res) => {
 })
 
 // API Routes
-// DATABASE QUERIES
-// give the knell instance to objection
-Model.knex(knex);
-
-// first Model
-class Book extends Model {
-  static get tableName() {
-    return 'books';
-  }
-
-  static get idColumn() {
-    return 'id';
-  }
-
-}
 
 app.get('/books', async (req, res) =>  {
-  
-  Book.query().then((booklist) => {
+  dbqueries.getAllBooks().then((booklist) => {
     console.log(`Been there: ${JSON.stringify(booklist)}`);
     res.send(booklist);
   }).catch((err) => {
     console.log(err);
     res.status(500).send(err);
   });
-
 })
 
-app.get('/books/:id', (req, res) => {
+app.get('/books/:id', async (req, res) => {
   const bookId = req.params.id;
-  const bookList = data.books.filter(book => Number(book.id) === Number(bookId));
-  if (bookList.length === 1) {
-    res.status(200).send(bookList[0]);
-  } else {
+  try {
+    const book = await dbqueries.getOneBook(bookId);
+    res.status(200).send(book);
+  } catch (error) {
     res.status(404).send(`Cannot find book of ID ${bookId}`);
   }
 })
+
+app.delete('/books/:id', async (req, res) => {
+  const bookId = req.params.id;
+  try {
+    const nbDeleted = await dbqueries.deleteOneBook(bookId);
+    res.status(200).send(`${nbDeleted} records deleted`);
+  } catch(error) {
+    res.status(404).send(`Cannot delete book of ID ${bookId} ${'\n'} ${error}`);
+  }
+
+})
+
 
 const port = process.env.PORT || 8888;
 app.listen(port, () => {
