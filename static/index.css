@@ -1,0 +1,157 @@
+@import url("https://fonts.googleapis.com/css2?family=Contrail+One&family=Roboto&display=swap");
+
+html {
+  box-sizing: border-box;
+  background: url("./nick-karvounis-Ciqxn7FE4vE-unsplash.jpg") top no-repeat;
+  background-size: 100% auto;
+  min-height: 1500px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+header,
+main {
+  width: 80%;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Contrail One", cursive;
+}
+h1 {
+  color: #cf1259;
+}
+h2,
+h3 {
+  color: #cf125ad3;
+  margin-bottom: 0.5rem;
+}
+
+button {
+  font-family: "Contrail One", cursive;
+  font-size: x-large;
+}
+
+button:hover {
+  border-color: #cf1259;
+}
+
+.explanation {
+  font-size: smaller;
+  font-style: italic;
+}
+
+#mainContainer {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: start;
+}
+
+footer {
+  font-size: x-small;
+  font-style: italic;
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+.dataContainer {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 5px;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.arrayDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+.arrayEltDiv {
+  background-color: rgb(255, 255, 255);
+  border: 1px solid black;
+  border-radius: 2px;
+  text-align: center;
+  margin-right: 2px;
+  margin-left: 2px;
+  width: 1.5em;
+}
+
+.arrayEltDiv.highlighted {
+  border: 1px solid red;
+}
+
+.arrayLabel {
+  min-width: 100px;
+}
+
+.stepDetail:hover .arrayEltDiv.highlighted {
+  transition: all 0.5s;
+  transform: translateY(1em);
+}
+
+.stepDetail:hover .afterInsertion {
+  transition: all 0.5s;
+  transform: translateX(2em);
+}
+
+#tempArrayViewer .afterInsertion {
+  animation-name: slideRight;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes slideRight {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-26px);
+  }
+}
+
+#tempArrayViewer .highlighted {
+  animation-name: fade;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 100%;
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 10%;
+    transform: translateY(20px);
+  }
+}
+
+#initialArrayViewer,
+#tempArrayViewer {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Trying out the animation library */

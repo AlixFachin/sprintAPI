@@ -1,0 +1,29 @@
+{
+  "name": "projectapi",
+  "version": "1.0.0",
+  "description": "Project for CRUD API server done in two days during Code Chrylasis bootcamp",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlixFachin/sprintAPI.git"
+  },
+  "keywords": [
+    "CRUD",
+    "API"
+  ],
+  "author": "Alix Fachin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AlixFachin/sprintAPI/issues"
+  },
+  "homepage": "https://github.com/AlixFachin/sprintAPI#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "knex": "^0.95.4"
+  }
+}
