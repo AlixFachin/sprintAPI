@@ -13,6 +13,9 @@ module.exports = {
   migrations: {
     tableName: 'migrations',
     directory: './migrations'
+  }, 
+  seeds: {
+    directory: './seeds'
   }
   },
 
@@ -27,6 +30,9 @@ module.exports = {
   migrations: {
     tableName: 'migrations',
     directory: './migrations'
+  }, 
+  seeds: {
+    directory: './seeds'
   }
   },
 
@@ -41,6 +47,9 @@ module.exports = {
   migrations: {
     tableName: 'migrations',
     directory: './migrations'
+  }, 
+  seeds: {
+    directory: './seeds'
   }
   }
 

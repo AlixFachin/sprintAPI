@@ -9,7 +9,9 @@
     "dev": "nodemon server.js",
     "makemigration" : "node -r dotenv/config ./node_modules/knex/bin/cli.js --knexfile ./knexfile.js migrate:make",
     "migrate" : "node -r dotenv/config ./node_modules/knex/bin/cli.js --knexfile ./knexfile.js migrate:latest",
-    "rollback" : "knex migrate:rollback"
+    "rollback" : "knex migrate:rollback",
+    "makeseed" : "node -r dotenv/config ./node_modules/knex/bin/cli.js --knexfile ./knexfile.js seed:make",
+    "runseed" : "node -r dotenv/config ./node_modules/knex/bin/cli.js --knexfile ./knexfile.js seed:run"
   },
   "repository": {
     "type": "git",
