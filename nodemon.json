@@ -1,0 +1,5 @@
+{
+  "verbose":true,
+  "watch": [ "./", "/static/"],
+  "ext" : "js json html"
+}
