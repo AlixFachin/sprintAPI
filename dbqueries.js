@@ -29,6 +29,15 @@ module.exports = {
 
   deleteOneBook: function(bookId) {
     return Book.query().deleteById(bookId);
+  },
+
+  createOneBook: function(newBookData) {
+    // input: will take a newBookData
+    return Book.query().insert(newBookData).returning('*');
+  },
+
+  updateOneBook: function(bookId, newBookData) {
+    return Book.query().patchAndFetchById(bookId, newBookData);
   }
 
 }

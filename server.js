@@ -15,7 +15,7 @@ app.use('/static',express.static(path.join(__dirname,'static','public')));
 // First route to serve static content
 app.get('/', (_, res) => {
   res.sendFile(path.join(__dirname + '/static/index.html'));
-})
+});
 
 // API Routes
 
@@ -27,7 +27,7 @@ app.get('/books', async (req, res) =>  {
     console.log(err);
     res.status(500).send(err);
   });
-})
+});
 
 app.get('/books/:id', async (req, res) => {
   const bookId = req.params.id;
@@ -37,7 +37,7 @@ app.get('/books/:id', async (req, res) => {
   } catch (error) {
     res.status(404).send(`Cannot find book of ID ${bookId}`);
   }
-})
+});
 
 app.delete('/books/:id', async (req, res) => {
   const bookId = req.params.id;
@@ -48,7 +48,30 @@ app.delete('/books/:id', async (req, res) => {
     res.status(404).send(`Cannot delete book of ID ${bookId} ${'\n'} ${error}`);
   }
 
-})
+});
+
+app.post('/books', async (req, res) => {
+  const newBookData = req.body;
+  try {
+    const insertedBook = await dbqueries.createOneBook(newBookData);
+    res.status(200).send(insertedBook);
+  } catch(error) {
+    res.status(404).send(`Error in creating new record` + `\n` + `${error}`);
+  }
+
+});
+
+app.patch('/books/:id', async (req, res)=> {
+  const updateBookData = req.body;
+  const bookId = req.params.id;
+  try {
+    const updatedBook = await dbqueries.updateOneBook(bookId, updateBookData);
+    res.status(200).send(updatedBook);
+  } catch(error) {
+    res.status(404).send(`Error in creating new record` + `\n` + `${error}`);
+  }
+
+});
 
 
 const port = process.env.PORT || 8888;
