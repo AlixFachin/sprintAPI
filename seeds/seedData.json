@@ -28,22 +28,19 @@
   ],
   "users": [
     {
-      "id":1,
-      "nickname":"Roger",
-      "lastname":"Jones",
-      "firstname":"John"
+      "nickName":"Roger",
+      "lastName":"Jones",
+      "firstName":"John"
     },
     {
-      "id":2,
-      "nickname":"Roboto",
-      "lastname":"Parker",
-      "firstname":"Miles"
+      "nickName":"Roboto",
+      "lastName":"Parker",
+      "firstName":"Miles"
     },
     {
-      "id":3,
-      "nickname":"Spidey",
-      "lastname":"Parker",
-      "firstname":"Peter"
+      "nickName":"Spidey",
+      "lastName":"Parker",
+      "firstName":"Peter"
     }
 
   ]

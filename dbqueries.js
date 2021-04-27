@@ -17,8 +17,20 @@ class Book extends Model {
   }
 }
 
+class User extends Model {
+  static get tableName() {
+    return 'users';
+  }
+
+  static get idColumn() {
+    return 'id';
+  }
+
+}
+
 module.exports = {
   
+  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= BOOKS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   getAllBooks: function() {
     return Book.query();
   },
@@ -38,6 +50,28 @@ module.exports = {
 
   updateOneBook: function(bookId, newBookData) {
     return Book.query().patchAndFetchById(bookId, newBookData);
+  },
+
+    // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= USERS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  getAllUsers: function() {
+    return User.query();
+  },
+  
+  getOneUser: function(userId) {
+    return User.query().findById(userId);
+  },
+
+  deleteOneUser: function(userId) {
+    return User.query().deleteById(userId);
+  },
+
+  createOneUser: function(newUserData) {
+    // input: will take a newUserData
+    return User.query().insert(newUserData).returning('*');
+  },
+
+  updateOneUser: function(userId, newUserData) {
+    return User.query().patchAndFetchById(userId, newUserData);
   }
 
 }
