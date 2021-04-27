@@ -5,6 +5,42 @@ info:
 servers:
   - url: http://127.0.0.1:8888/
 paths:
+  /users/{id}:
+    get:
+      description: Retrieves the corresponding user from the database
+      summary: Retrieves one user from the database.
+      parameters:
+        - in: path
+          name: id
+          schema: 
+            type: integer
+          required: true
+          description: User ID passed in parameter
+      responses:
+          '200':
+            description: User corresponding to this ID
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/User"
+
+  /users:
+    get:
+      description: Returns the list of all users.
+      summary: Returns the list of all users in the database.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+    
+      
+  
+
   /books/{id}:
     get:
       summary: Retrieve a single book from the database
@@ -28,11 +64,35 @@ paths:
     delete:
         summary: Delete one book from the database
         description: Looks for the book passed in parameter, then deletes it 
+        parameters:
+          - in: path
+            name: id
+            schema: 
+              type: integer
+            required: true
+            description: numeric ID of the book ID to delete
         responses:
           '200':
             description: OK
+          '404':
+            description: The current ID was not found in the database
     patch:
-      description: 
+      description: Update a book. The new values of the book fields must be contained into a JSON object encapsulated into the JSON request body.
+      summary: Updates a book in the database.
+      parameters:
+        - in: path
+          name: id
+          schema: 
+            type: integer
+          required: true
+          description: numeric ID of the book ID to update
+      requestBody:
+        description: book to be added to be updated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref:  "#/components/schemas/EditBook"
       responses:
         '200':
           description: OK
@@ -40,6 +100,7 @@ paths:
   /books:
     get:
       description: Retrieves the list of all the books present in the book library
+      summary: Retrieves all the books in the database.
       responses:
         '200':
           description: returns a list of books
@@ -48,33 +109,17 @@ paths:
                 schema:
                   type: array
                   items:
-                    type: object
-                    properties:
-                        id:
-                          type: integer
-                          description: the book ID
-                          example: 1
-                        title:
-                          type: string
-                          description: book title
-                          example: 'Grapes of Wrath'
-                        author:
-                          type: string
-                          description: author name
-                          example: 'John Steinbeck'
-                        genre:
-                          type: string
-                          description: genre type
-                          example: 'Drama'
+                    $ref: "#/components/schemas/Book"
     post:
       description: Insert a new book into the database. The book JSON object should be in the query body.
+      summary: Inserts a new book into the database.
       requestBody:
         description: book to be added to the inventory
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Book'
+              $ref:  "#/components/schemas/EditBook"
       responses:
         '200':
           description: OK
@@ -93,6 +138,23 @@ components:
           type: integer
           description: the book ID
           example: 1
+        title:
+          type: string
+          description: book title
+          example: 'Grapes of Wrath'
+        author:
+            type: string
+            description: author name
+            example: 'John Steinbeck'
+        genre:
+            type: string
+            description: genre type
+            example: 'Drama'
+    EditBook:
+      title: EditBook
+      description: subtype used in POST, PATCH queries. Missing the ID field as it is filled by the DB anyway.
+      type: object
+      properties:
         title:
           type: string
           description: book title

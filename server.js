@@ -26,7 +26,7 @@ const swaggerDefinition = {
   },
 }
 
-const swaggerSpec = YAML.load('./yaml/bookclub.yml');
+const swaggerSpec = YAML.load('./yaml/bookclub.yaml');
 
 const app = express();
 
@@ -41,9 +41,10 @@ app.get('/', (_, res) => {
 
 // API Routes
 
+// -=-=-=-=-=-=-=-=-=-=-=-=  Books -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
 app.get('/books', async (req, res) =>  {
   dbqueries.getAllBooks().then((booklist) => {
-    console.log(`Been there: ${JSON.stringify(booklist)}`);
     res.send(booklist);
   }).catch((err) => {
     console.log(err);
@@ -98,6 +99,33 @@ app.patch('/books/:id', async (req, res)=> {
   }
 
 });
+
+// -=-=-=-=-=-=-=-=-=-=-=-=  Books -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+app.get('/users', async (req, res) => {
+  dbqueries.getAllUsers().then( (userList) => {
+    res.send(userList);
+  }).catch((err) => {
+    console.log(err);
+    res.status(500).send(err);
+  })
+
+});
+
+app.get('/users/:id', async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const returnUser = await dbqueries.getOneUser(userId);
+    if (returnUser) {
+      res.status(200).send(returnUser);
+    } else {
+      res.status(404).send(`Cannot find user of ID ${userId}`);
+    }
+  } catch(error) {
+    res.status(500).send(`Server error:  ${error}`)
+  }
+});
+
 
 
 const port = process.env.PORT || 8888;
