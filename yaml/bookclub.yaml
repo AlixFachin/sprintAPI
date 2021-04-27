@@ -1,0 +1,128 @@
+openapi: '3.0.2'
+info:
+  title: Book Club API
+  version: '1.0'
+servers:
+  - url: http://127.0.0.1:8888/
+paths:
+  /books/{id}:
+    get:
+      summary: Retrieve a single book from the database
+      description: Retrieves data corresponding to one book in the database. 
+      parameters:
+        - in: path
+          name: id
+          schema: 
+            type: integer
+          required: true
+          description: numeric ID of the book ID to get
+      responses:
+        200:
+          description: book corresponding to the parameter id.
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Book'
+        404:
+              description: book not found - database returned empty query
+    delete:
+        summary: Delete one book from the database
+        description: Looks for the book passed in parameter, then deletes it 
+        responses:
+          '200':
+            description: OK
+    patch:
+      description: 
+      responses:
+        '200':
+          description: OK
+
+  /books:
+    get:
+      description: Retrieves the list of all the books present in the book library
+      responses:
+        '200':
+          description: returns a list of books
+          content:
+            application/json:
+                schema:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                        id:
+                          type: integer
+                          description: the book ID
+                          example: 1
+                        title:
+                          type: string
+                          description: book title
+                          example: 'Grapes of Wrath'
+                        author:
+                          type: string
+                          description: author name
+                          example: 'John Steinbeck'
+                        genre:
+                          type: string
+                          description: genre type
+                          example: 'Drama'
+    post:
+      description: Insert a new book into the database. The book JSON object should be in the query body.
+      requestBody:
+        description: book to be added to the inventory
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+
+components:
+  schemas:
+    Book:
+      title: Book
+      type: object
+      properties:
+        id:
+          type: integer
+          description: the book ID
+          example: 1
+        title:
+          type: string
+          description: book title
+          example: 'Grapes of Wrath'
+        author:
+            type: string
+            description: author name
+            example: 'John Steinbeck'
+        genre:
+            type: string
+            description: genre type
+            example: 'Drama'
+    User:
+      title: User
+      type: object
+      properties:
+        id:
+          type: integer
+          description: the user ID  
+        firstName:
+          type: string
+          description:  user's first name
+          example: 'Peter'
+        lastName:
+          type: string
+          description: user's last name
+          example: 'Parker'
+        nickName:
+          type: string
+          description: user's nickName
+          example: 'Spidey'
+
+

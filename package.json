@@ -34,7 +34,7 @@
     "nodemon": "^2.0.7",
     "objection": "^2.2.15",
     "pg": "^8.6.0",
-    "swagger-jsdoc": "^5.0.1",
-    "swagger-ui-express": "^4.1.6"
+    "swagger-ui-express": "^4.1.6",
+    "yamljs": "^0.3.0"
   }
 }

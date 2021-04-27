@@ -5,9 +5,9 @@ path = require('path');
 const dbqueries = require('./dbqueries');
 
 // Necessary lines for the API Doc library
-const swaggerJSDoc = require('swagger-jsdoc');
+// const swaggerJSDoc = require('swagger-jsdoc');
+const YAML = require('yamljs');
 const swaggerUi = require('swagger-ui-express');
-const { ConstraintViolationError } = require('db-errors');
 
 const swaggerDefinition = {
   openapi: '3.0.0',
@@ -26,16 +26,7 @@ const swaggerDefinition = {
   },
 }
 
-const swaggerOptions = {
-  swaggerDefinition,
-  apis: ['./*.js'],
-};
-
-const swaggerSpec = swaggerJSDoc(swaggerOptions);
-
-
-// // Temporary measure -> Loading the package.json() file
-// const JSONdata = require('./seedData.json');
+const swaggerSpec = YAML.load('./yaml/bookclub.yml');
 
 const app = express();
 
@@ -50,41 +41,6 @@ app.get('/', (_, res) => {
 
 // API Routes
 
-/**
- * @swagger
- * /books:
- *  get:
- *    summary: Retrieve the list of all the books present in the book club inventory
- *    description: Retrieves the list of all the books in the database. 
- *    responses:
- *      200:
- *        description: a list of users.
- *        content:
- *           application/json:
- *             schema:
- *                type: array
- *                items:
- *                  type: object
- *                  properties:
- *                     id:
- *                       type: integer
- *                       description: the user ID
- *                       example: 1
- *                     title:
- *                       type: string
- *                       description: book title
- *                       example: 'Grapes of Wrath'
- *                     author:
- *                        type: string
- *                        description: author name
- *                        example: 'John Steinbeck'
- *                     genre:
- *                        type: string
- *                        description: genre type
- *                        example: 'Drama'
- * 
- */
-
 app.get('/books', async (req, res) =>  {
   dbqueries.getAllBooks().then((booklist) => {
     console.log(`Been there: ${JSON.stringify(booklist)}`);
@@ -94,49 +50,6 @@ app.get('/books', async (req, res) =>  {
     res.status(500).send(err);
   });
 });
-
-
-/**
- * @swagger
- * /books/{id}:
- *  get:
- *    summary: Retrieve a single book from the database
- *    description: Retrieves data corresponding to one book in the database. 
- *    parameters:
- *      - in: path
- *        name: id
- *        schema: 
- *          type: integer
- *        required: true
- *        description: numeric ID of the book ID to get
- *    responses:
- *      200:
- *        description: book corresponding to the parameter id.
- *        content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                  id:
- *                    type: integer
- *                    description: the user ID
- *                    example: 1
- *                  title:
- *                    type: string
- *                    description: book title
- *                    example: 'Grapes of Wrath'
- *                  author:
- *                     type: string
- *                     description: author name
- *                     example: 'John Steinbeck'
- *                  genre:
- *                     type: string
- *                     description: genre type
- *                     example: 'Drama'
- *      404:
- *           description: book not found - database returned empty query
- * 
- */
 
 app.get('/books/:id', async (req, res) => {
   const bookId = req.params.id;
@@ -152,29 +65,6 @@ app.get('/books/:id', async (req, res) => {
   }
 });
 
-/**
- * @swagger
- * /books/{id}:
- *  delete:
- *    summary: Delete a single book from the database
- *    description: Delete one record from the database. 
- *    parameters:
- *      - in: path
- *        name: id
- *        schema: 
- *          type: integer
- *        required: true
- *        description: numeric ID of the book ID to get
- *    responses:
- *      200:
- *        description: number of entries deleted.
- *        content:
- *           application/json:
- *             schema:
- *               type: integer
- *               description: number of records deleted
- */
-
 app.delete('/books/:id', async (req, res) => {
   const bookId = req.params.id;
   try {
@@ -186,15 +76,6 @@ app.delete('/books/:id', async (req, res) => {
 
 });
 
-/**
- * @swagger
- * /books:
- *  post:
- *    summary: Inserts a new book from the database
- *    description: Creates a new book record in the database according to the request body. 
- * 
- */
-
 app.post('/books', async (req, res) => {
   const newBookData = req.body;
   try {
@@ -205,24 +86,6 @@ app.post('/books', async (req, res) => {
   }
 
 });
-
-/**
- * @swagger
- * /books/{id}:
- *  patch:
- *    summary: Updates a new book from the database
- *    description: Creates a new book record in the database according to the request body. 
- *    parameters:
- *      - in: path
- *        name: id
- *        schema: 
- *          type: integer
- *        required: true
- *        description: numeric ID of the book ID to be updated
- *    responses:
- *      200:
- *        description: returns the new object value.
- */
 
 app.patch('/books/:id', async (req, res)=> {
   const updateBookData = req.body;
