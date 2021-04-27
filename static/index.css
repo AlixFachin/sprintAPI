@@ -2,9 +2,10 @@
 
 html {
   box-sizing: border-box;
-  background: url("./nick-karvounis-Ciqxn7FE4vE-unsplash.jpg") top no-repeat;
-  background-size: 100% auto;
-  min-height: 1500px;
+  background: #348F50;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #56B4D3, #348F50);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #56B4D3, #348F50); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    min-height: 1500px;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
@@ -28,21 +29,12 @@ h3 {
   font-family: "Contrail One", cursive;
 }
 h1 {
-  color: #cf1259;
+  color: hsl(0, 0%, 0%);
 }
 h2,
 h3 {
   color: #cf125ad3;
   margin-bottom: 0.5rem;
-}
-
-button {
-  font-family: "Contrail One", cursive;
-  font-size: x-large;
-}
-
-button:hover {
-  border-color: #cf1259;
 }
 
 .explanation {
@@ -51,20 +43,6 @@ button:hover {
 }
 
 #mainContainer {
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: start;
-}
-
-footer {
-  font-size: x-small;
-  font-style: italic;
-  background-color: rgba(255, 255, 255, 0.75);
-}
-
-.dataContainer {
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 5px;
   padding-left: 1em;
@@ -72,7 +50,20 @@ footer {
   padding-top: 5px;
   padding-bottom: 5px;
   margin-bottom: 20px;
+  margin-top: 20px;
   box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.1);
+
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+footer {
+  font-size: x-small;
+  font-style: italic;
+  background-color: rgba(255, 255, 255, 0.75);
 }
 
 .arrayDiv {
