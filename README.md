@@ -15,6 +15,9 @@ We will then have four tables:
 * One table of 'properties' to represent that several users can have the "same" book, actually a different physical book (**TBD**)
 * One table of 'transactions' to store historically when users lent books to each other. (**TBD**)
 
+![DB Structure]('static/public/DBStructure.png')
+
+
 # Installation
 ## Server install
 The project is made with `npm` so if you clone the repository and run `npm install`, you should have all the packages installed.
